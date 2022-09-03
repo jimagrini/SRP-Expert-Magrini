@@ -9,13 +9,16 @@ namespace Library
     */
     public class PersonData
     {
+        public string Age {get; set;}
         public string Name {get; set;}
         public string Id {get; set;}
         public string PhoneNumber {get; set;}
-        public PersonData(String name, String id, string phoneNumber)
+        public PersonData(String name, string age, String id, string phoneNumber)
         {
             StringBuilder stringBuilder = new StringBuilder("Saving personal data...\n");
             Boolean isValid = true;
+            
+            this.Age=age;
             
             if (string.IsNullOrEmpty(name))
             {
@@ -53,7 +56,7 @@ namespace Library
             Console.WriteLine(stringBuilder.ToString());   
         }
     }
-    public class AppointmentService
+        public class AppointmentService
     {
         /*Opino que AppointmentService violaba el principio SRP debido a que tiene más de una razon de cambio
         los datos de la persona deberían de almacenarse en otra clase distinta por ej: PersonData y que la
@@ -62,10 +65,15 @@ namespace Library
         */
         public static string CreateAppointment(PersonData person,DateTime date, string appoinmentPlace, string doctorName)
         {
-            StringBuilder stringBuilder = new StringBuilder($"Scheduling appointment for {person.Name} ...\n");
+            StringBuilder stringBuilder = new StringBuilder($"Scheduling appointment ...\n");
             Boolean isValid = true;
             
-            
+            StringBuilder appointmentCode  = new StringBuilder($"APPCOD{new Random().Next()}");
+            //Aqui estoy creando una variable que genera un codigo identificador para cada cita médica
+
+            //Creo que incluir una variable sobre la especialidad del doctor es innecesario
+            //ya que al especificar el nombre del doctor estariamos conociendo ya su especialidad
+
             if (string.IsNullOrEmpty(appoinmentPlace))
             {
                 stringBuilder.Append("Unable to schedule appointment, 'appoinment place' is required\n");
@@ -81,10 +89,10 @@ namespace Library
 
             if (isValid)
             {
-                stringBuilder.Append("Appoinment scheduled");
+                stringBuilder.Append($"Appoinment for {person.Name} succesfully scheduled");
             }
 
-            return stringBuilder.ToString();
+            return stringBuilder.ToString() + $", the code is {appointmentCode}";
         }
 
     }
