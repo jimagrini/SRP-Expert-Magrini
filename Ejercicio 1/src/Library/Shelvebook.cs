@@ -7,9 +7,9 @@ namespace SRP
         public string Book {get; set;}
         public string LibrarySector { get ; set; }
         public string LibraryShelve { get ; set; }
-        public ShelveBook(string book, String sector, String shelve)
+        public ShelveBook(Book book, String sector, String shelve)
         {
-            this.Book=book;   
+            this.Book=book.Title;   
             this.LibrarySector = sector;
             this.LibraryShelve = shelve;
         }
